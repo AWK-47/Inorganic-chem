@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AQA Inorganic Redox — Complete Guide</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0b0f18; color: #e2e8f0; font-family: 'Georgia', 'Times New Roman', serif; }
+    ::-webkit-scrollbar { height: 4px; width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    const topics = [
+      { id: "halogens", label: "Halogens", emoji: "🟢", color: "#4ade80", dark: "#052e16" },
+      { id: "halides_h2so4", label: "Halides + H₂SO₄", emoji: "🟡", color: "#facc15", dark: "#1c1200" },
+      { id: "sulfur", label: "Sulfur / SO₂ / SO₃", emoji: "🟠", color: "#fb923c", dark: "#1c0a00" },
+      { id: "vanadium", label: "Vanadium", emoji: "🔵", color: "#60a5fa", dark: "#0c1a2e" },
+      { id: "manganese", label: "Manganese", emoji: "🟣", color: "#c084fc", dark: "#1a0c2e" },
+      { id: "chromium", label: "Chromium", emoji: "🟠", color: "#f97316", dark: "#1c0800" },
+      { id: "iron", label: "Iron", emoji: "🔴", color: "#f87171", dark: "#1c0505" },
+      { id: "copper", label: "Copper", emoji: "🟤", color: "#fb923c", dark: "#1c0a00" },
+      { id: "iodine", label: "Iodine / Thiosulfate", emoji: "⚫", color: "#94a3b8", dark: "#0f172a" },
+      { id: "h2o2", label: "H₂O₂", emoji: "💧", color: "#67e8f9", dark: "#0c1f2e" },
+    ];
+
+    const Reaction = ({ equation, oxidised, reduced, obs, note, color }) => (
+      <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", borderLeft: `3px solid ${color}`, borderRadius: 8, padding: "14px 18px", marginBottom: 14 }}>
+        <div style={{ fontFamily: "'Courier New', monospace", fontSize: "1.05em", color: "#f1f5f9", marginBottom: 8, lineHeight: 1.6 }}>{equation}</div>
+        {(oxidised || reduced) && (
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 6 }}>
+            {oxidised && <span style={{ background: "rgba(239,68,68,0.18)", color: "#fca5a5", padding: "2px 10px", borderRadius: 20, fontSize: "0.82em", fontWeight: 600 }}>↑ OXIDISED: {oxidised}</span>}
+            {reduced && <span style={{ background: "rgba(59,130,246,0.18)", color: "#93c5fd", padding: "2px 10px", borderRadius: 20, fontSize: "0.82em", fontWeight: 600 }}>↓ REDUCED: {reduced}</span>}
+          </div>
+        )}
+        {obs && <div style={{ color: "#fde68a", fontSize: "0.85em", marginBottom: 4 }}>👁 <b>Observation:</b> {obs}</div>}
+        {note && <div style={{ color: "#94a3b8", fontSize: "0.85em", marginTop: 4 }}>💡 {note}</div>}
+      </div>
+    );
+
+    const Section = ({ title, children, color }) => (
+      <div style={{ marginBottom: 28 }}>
+        <h3 style={{ color, fontFamily: "'Georgia', serif", fontSize: "1.1em", fontWeight: 700, marginBottom: 12, paddingBottom: 6, borderBottom: "1px solid rgba(255,255,255,0.08)" }}>{title}</h3>
+        {children}
+      </div>
+    );
+
+    const InfoBox = ({ color, bg, children }) => (
+      <div style={{ background: bg, border: `1px solid ${color}`, borderRadius: 8, padding: "12px 16px", marginBottom: 18, fontSize: "0.88em", color }}>{children}</div>
+    );
+
+    const content = {
+      halogens: (c) => (
+        <>
+          <InfoBox color="#86efac" bg="rgba(74,222,128,0.07)">
+            <b>Key idea:</b> More reactive halogens are better oxidising agents — they steal electrons more easily. Order: Cl₂ &gt; Br₂ &gt; I₂. A halogen can only displace a <em>less</em> reactive halide.
+          </InfoBox>
+          <Section title="Halogen Displacement" color={c}>
+            <Reaction color={c} equation="Cl₂ + 2KBr → 2KCl + Br₂" oxidised="Br⁻ (−1 → 0)" reduced="Cl₂ (0 → −1)" obs="Colourless → orange/brown solution" note="Cl₂ is a stronger oxidising agent so it steals electrons from Br⁻. Br⁻ loses an electron (oxidised), Cl₂ gains electrons (reduced)." />
+            <Reaction color={c} equation="Cl₂ + 2KI → 2KCl + I₂" oxidised="I⁻ (−1 → 0)" reduced="Cl₂ (0 → −1)" obs="Colourless → brown/violet solution. Brown in water, violet in organic solvent" note="Same logic — Cl₂ oxidises I⁻. I₂ formed is brown in water." />
+            <Reaction color={c} equation="Br₂ + 2KI → 2KBr + I₂" oxidised="I⁻ (−1 → 0)" reduced="Br₂ (0 → −1)" obs="Orange/brown → darker brown" note="Br₂ can oxidise I⁻ (Br₂ is more reactive than I₂), but Br₂ CANNOT displace Cl⁻." />
+            <Reaction color={c} equation="I₂ + KCl → NO REACTION" obs="Nothing happens" note="I₂ is the weakest oxidising agent of the three — it cannot oxidise Cl⁻ or Br⁻." />
+          </Section>
+          <Section title="Halogens with NaOH — Disproportionation" color={c}>
+            <div style={{ color: "#94a3b8", fontSize: "0.85em", marginBottom: 10 }}>Disproportionation = same element gets BOTH oxidised AND reduced at the same time.</div>
+            <Reaction color={c} equation="Cl₂ + 2NaOH → NaCl + NaOCl + H₂O   [cold, dilute]" oxidised="Cl₂ half: 0 → +1 (in NaOCl, chlorate(I))" reduced="Cl₂ half: 0 → −1 (in NaCl)" obs="Yellow-green gas absorbed, solution formed" note="Both products come from the same Cl₂ molecule splitting. One Cl becomes +1 (bleach, NaOCl) and one becomes −1 (NaCl). This is disproportionation." />
+            <Reaction color={c} equation="3Cl₂ + 6NaOH → 5NaCl + NaClO₃ + 3H₂O   [hot, conc]" oxidised="Cl₂ fraction: 0 → +5 (in NaClO₃, chlorate(V))" reduced="Cl₂ fraction: 0 → −1 (in NaCl)" note="Hotter conditions drive further oxidation to +5. Still disproportionation — Cl is both oxidised and reduced." />
+          </Section>
+          <Section title="Testing Halides with AgNO₃ (not redox, but linked)" color={c}>
+            <div style={{ color: "#94a3b8", fontSize: "0.85em" }}>Cl⁻ → white ppt (AgCl, soluble in dilute NH₃) | Br⁻ → cream ppt (AgBr, soluble in conc NH₃) | I⁻ → yellow ppt (AgI, insoluble in NH₃). Not redox — just precipitation. Oxidation states don't change.</div>
+          </Section>
+        </>
+      ),
+
+      halides_h2so4: (c) => (
+        <>
+          <InfoBox color="#fde68a" bg="rgba(250,204,21,0.07)">
+            <b>Key idea:</b> Concentrated H₂SO₄ acts as an oxidising agent. The stronger the reducing power of the halide, the further it reduces H₂SO₄. HCl can't reduce it at all. HBr reduces it to SO₂. HI reduces it all the way to H₂S.
+          </InfoBox>
+          <Section title="NaCl + Conc H₂SO₄" color={c}>
+            <Reaction color={c} equation="NaCl + H₂SO₄(conc) → NaHSO₄ + HCl↑" obs="Steamy/misty fumes of HCl. Pungent smell." note="NOT a redox reaction — sulfur stays at +6, chlorine stays at −1. H₂SO₄ is simply acting as an acid here. HCl is too weak a reducing agent to reduce H₂SO₄." />
+          </Section>
+          <Section title="NaBr + Conc H₂SO₄" color={c}>
+            <Reaction color={c} equation="NaBr + H₂SO₄(conc) → NaHSO₄ + HBr↑" note="First step — just acid-base, same as Cl⁻" />
+            <Reaction color={c} equation="2HBr + H₂SO₄(conc) → SO₂ + Br₂ + 2H₂O" oxidised="Br⁻ (−1 → 0, in Br₂)" reduced="S (+6 → +4, in SO₂)" obs="Brown fumes of Br₂, sharp smell of SO₂" note="HBr is a strong enough reducing agent to reduce H₂SO₄ to SO₂ — but no further. So you see SO₂ and Br₂ but no H₂S or S." />
+          </Section>
+          <Section title="NaI + Conc H₂SO₄ (most dramatic)" color={c}>
+            <Reaction color={c} equation="NaI + H₂SO₄(conc) → NaHSO₄ + HI↑" note="First step — acid-base" />
+            <Reaction color={c} equation="2HI + H₂SO₄(conc) → SO₂ + I₂ + 2H₂O" oxidised="I⁻ (−1 → 0)" reduced="S (+6 → +4)" obs="Violet/purple fumes of I₂" />
+            <Reaction color={c} equation="6HI + H₂SO₄(conc) → S↓ + 3I₂ + 4H₂O" oxidised="I⁻ (−1 → 0)" reduced="S (+6 → 0)" obs="Yellow solid sulfur precipitates" />
+            <Reaction color={c} equation="8HI + H₂SO₄(conc) → H₂S↑ + 4I₂ + 4H₂O" oxidised="I⁻ (−1 → 0)" reduced="S (+6 → −2)" obs="Rotten egg smell of H₂S" note="HI is such a strong reducing agent it drives S all the way down to −2 in H₂S. You observe all three: SO₂, yellow S, and H₂S alongside violet I₂ fumes." />
+          </Section>
+          <Section title="Summary Table" color={c}>
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.85em", color: "#cbd5e1" }}>
+                <thead>
+                  <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.15)" }}>
+                    {["Halide", "Products from H₂SO₄", "S reduced to"].map(h => <th key={h} style={{ padding: "8px 12px", textAlign: "left", color: c }}>{h}</th>)}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[["Cl⁻", "HCl only", "Not reduced (no redox)"], ["Br⁻", "HBr, SO₂, Br₂", "S: +6 → +4"], ["I⁻", "HI, SO₂, S, H₂S, I₂", "S: +6 → +4, 0, −2"]].map(([a, b, cc]) => (
+                    <tr key={a} style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                      <td style={{ padding: "8px 12px" }}>{a}</td>
+                      <td style={{ padding: "8px 12px", fontFamily: "monospace" }}>{b}</td>
+                      <td style={{ padding: "8px 12px" }}>{cc}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Section>
+        </>
+      ),
+
+      sulfur: (c) => (
+        <>
+          <InfoBox color="#fed7aa" bg="rgba(251,146,60,0.07)">
+            <b>Key idea:</b> Sulfur oxidation states: H₂S = −2, S = 0, SO₂ = +4, SO₃ = +6, H₂SO₄ = +6. SO₂ is most interesting — it can act as BOTH a reducing agent (gets oxidised to +6) and an oxidising agent (gets reduced to 0 or −2).
+          </InfoBox>
+          <Section title="Contact Process (making H₂SO₄)" color={c}>
+            <Reaction color={c} equation="S + O₂ → SO₂" oxidised="S (0 → +4)" reduced="O₂ (0 → −2)" note="Burning sulfur. S is oxidised by oxygen." />
+            <Reaction color={c} equation="2SO₂ + O₂ ⇌ 2SO₃   [V₂O₅ catalyst, ~450°C, 1–2 atm]" oxidised="S (+4 → +6)" reduced="O₂ (0 → −2)" obs="Equilibrium — can go either way" note="This is the key step. V₂O₅ works here because vanadium cycles between +5 and +4 — it oxidises SO₂ then gets re-oxidised by O₂. Reversible reaction, so conditions are a compromise." />
+            <Reaction color={c} equation="SO₃ + H₂SO₄ → H₂S₂O₇   then   H₂S₂O₇ + H₂O → 2H₂SO₄" note="SO₃ isn't dissolved directly in water (forms acid mist). Instead absorbed into conc H₂SO₄ to make oleum, then diluted." />
+          </Section>
+          <Section title="SO₂ as a Reducing Agent (gets oxidised)" color={c}>
+            <Reaction color={c} equation="SO₂ + Br₂ + 2H₂O → H₂SO₄ + 2HBr" oxidised="S (+4 → +6, in H₂SO₄)" reduced="Br₂ (0 → −1)" obs="Orange bromine water decolourises" note="SO₂ donates electrons to Br₂. Br₂ is decolourised — this is a test that SO₂ is present AND acts as a reducing agent." />
+            <Reaction color={c} equation="SO₂ + Cl₂ + 2H₂O → H₂SO₄ + 2HCl" oxidised="S (+4 → +6)" reduced="Cl₂ (0 → −1)" note="Same pattern with chlorine." />
+            <Reaction color={c} equation="SO₂ + I₂ + 2H₂O → H₂SO₄ + 2HI" oxidised="S (+4 → +6)" reduced="I₂ (0 → −1)" obs="Brown I₂ solution decolourises" note="SO₂ decolourises iodine solution — another use as a reducing agent." />
+          </Section>
+          <Section title="SO₂ as an Oxidising Agent (gets reduced)" color={c}>
+            <Reaction color={c} equation="SO₂ + 2H₂S → 3S + 2H₂O" oxidised="S in H₂S (−2 → 0)" reduced="S in SO₂ (+4 → 0)" obs="Yellow sulfur precipitate forms" note="When SO₂ meets H₂S, SO₂ wins the electron tug-of-war — it oxidises H₂S while it itself gets reduced to elemental sulfur. Both S atoms end up at 0." />
+          </Section>
+          <Section title="Conc H₂SO₄ as Oxidising Agent" color={c}>
+            <Reaction color={c} equation="Cu + 2H₂SO₄(conc, hot) → CuSO₄ + SO₂ + 2H₂O" oxidised="Cu (0 → +2)" reduced="S (+6 → +4, in SO₂)" obs="Blue CuSO₄ solution, SO₂ gas" note="Dilute H₂SO₄ does NOT react with Cu. Only concentrated H₂SO₄ can — it acts as the oxidising agent, not H⁺." />
+            <Reaction color={c} equation="C + 2H₂SO₄(conc, hot) → CO₂ + 2SO₂ + 2H₂O" oxidised="C (0 → +4)" reduced="S (+6 → +4)" note="Conc H₂SO₄ oxidises even non-metals like carbon." />
+          </Section>
+        </>
+      ),
+
+      vanadium: (c) => (
+        <>
+          <InfoBox color="#bfdbfe" bg="rgba(96,165,250,0.07)">
+            <b>Key idea:</b> Vanadium exists in 4 oxidation states. When you reduce ammonium vanadate(V) with zinc in acid, you watch it go through all four colours step by step — like a colour-change ladder.
+          </InfoBox>
+          <Section title="Oxidation States & Colours" color={c}>
+            {[["VO₂⁺", "+5", "#facc15", "Yellow", "vanadate(V) ion"], ["VO²⁺", "+4", "#3b82f6", "Blue", "vanadyl(IV) ion"], ["V³⁺", "+3", "#16a34a", "Green", "vanadium(III) ion"], ["V²⁺", "+2", "#7c3aed", "Violet/Lilac", "vanadium(II) ion"]].map(([ion, ox, col, colour, name]) => (
+              <div key={ox} style={{ display: "flex", alignItems: "center", gap: 14, padding: "10px 14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, marginBottom: 8 }}>
+                <div style={{ width: 36, height: 36, borderRadius: "50%", background: col, flexShrink: 0 }} />
+                <div>
+                  <span style={{ fontFamily: "monospace", fontSize: "1.1em", color: "#f1f5f9" }}>{ion}</span>
+                  <span style={{ color: "#94a3b8", marginLeft: 10, fontSize: "0.85em" }}>Oxidation state: <b style={{ color: c }}>{ox}</b> — {colour} — {name}</span>
+                </div>
+              </div>
+            ))}
+          </Section>
+          <Section title="Reduction Steps with Zn in Dilute H₂SO₄" color={c}>
+            <div style={{ color: "#94a3b8", fontSize: "0.85em", marginBottom: 10 }}>Zinc is a strong enough reducing agent to go all the way from +5 down to +2. Each step, one electron is transferred. You literally see the colour change in the test tube.</div>
+            <Reaction color={c} equation="VO₂⁺ + 2H⁺ + e⁻ → VO²⁺ + H₂O" reduced="V (+5 → +4)" obs="Yellow → Blue" note="First electron added. Zn donates electrons — Zn is being oxidised here (Zn → Zn²⁺)." />
+            <Reaction color={c} equation="VO²⁺ + 2H⁺ + e⁻ → V³⁺ + H₂O" reduced="V (+4 → +3)" obs="Blue → Green" note="Second electron added." />
+            <Reaction color={c} equation="V³⁺ + e⁻ → V²⁺" reduced="V (+3 → +2)" obs="Green → Violet/Lilac" note="Third electron added. At this point Zn has done all its work." />
+          </Section>
+          <Section title="Vanadium as Catalyst in Contact Process" color={c}>
+            <Reaction color={c} equation="V₂O₅ + SO₂ → V₂O₄ + SO₃   (V: +5 → +4)" reduced="V (+5 → +4)" oxidised="S (+4 → +6)" note="V₂O₅ oxidises SO₂ to SO₃, and gets reduced itself to V₂O₄." />
+            <Reaction color={c} equation="V₂O₄ + ½O₂ → V₂O₅   (V: +4 → +5)" oxidised="V (+4 → +5)" reduced="O₂ (0 → −2)" note="V₂O₄ is then reoxidised back to V₂O₅ by O₂. This is why V₂O₅ works as a catalyst — it's regenerated. Its ability to cycle between +4 and +5 is the key." />
+          </Section>
+        </>
+      ),
+
+      manganese: (c) => (
+        <>
+          <InfoBox color="#e9d5ff" bg="rgba(192,132,252,0.07)">
+            <b>Key idea:</b> MnO₄⁻ (permanganate) is one of the most powerful oxidising agents you'll use. What Mn ends up as depends entirely on whether the solution is acidic or alkaline. In acid → Mn²⁺ (colourless). In alkali → MnO₂ (brown solid).
+          </InfoBox>
+          <Section title="MnO₄⁻ in Acidic Solution (the important one)" color={c}>
+            <Reaction color={c} equation="MnO₄⁻ + 8H⁺ + 5e⁻ → Mn²⁺ + 4H₂O" reduced="Mn (+7 → +2)" obs="Purple/violet → colourless" note="The half-equation for reduction. Needs H⁺ — this is why acid is required. 5 electrons needed per MnO₄⁻. You must learn this half-equation." />
+            <Reaction color={c} equation="2MnO₄⁻ + 5Fe²⁺ + 16H⁺ → 2Mn²⁺ + 5Fe³⁺ + 8H₂O" reduced="Mn (+7 → +2)" oxidised="Fe (+2 → +3)" obs="Purple decolourises" note="Classic titration — used to find Fe²⁺ concentration. 5 Fe²⁺ per 2 MnO₄⁻ because Mn needs 5e⁻ and Fe only gives 1e⁻." />
+            <Reaction color={c} equation="2MnO₄⁻ + 5H₂O₂ + 6H⁺ → 2Mn²⁺ + 5O₂ + 8H₂O" reduced="Mn (+7 → +2)" oxidised="O (−1 → 0, in H₂O₂)" obs="Purple decolourises, effervescence of O₂" note="H₂O₂ acts as a REDUCING agent here. It donates electrons to permanganate." />
+            <Reaction color={c} equation="2MnO₄⁻ + 5C₂O₄²⁻ + 16H⁺ → 2Mn²⁺ + 10CO₂ + 8H₂O" reduced="Mn (+7 → +2)" oxidised="C (+3 → +4, in oxalate)" obs="Purple decolourises. Needs warming to start." note="Oxalate (ethanedioate) is oxidised to CO₂. Used in titrations with iron tablets." />
+          </Section>
+          <Section title="MnO₄⁻ in Neutral/Alkaline Solution" color={c}>
+            <Reaction color={c} equation="MnO₄⁻ + 2H₂O + 3e⁻ → MnO₂ + 4OH⁻" reduced="Mn (+7 → +4)" obs="Purple → brown precipitate of MnO₂" note="In alkali, Mn only gets reduced to +4 (MnO₂), not all the way to +2. The H⁺ ions aren't available, so the reaction doesn't go as far." />
+          </Section>
+          <Section title="MnO₂ as an Oxidising Agent" color={c}>
+            <Reaction color={c} equation="MnO₂ + 4HCl(conc) → MnCl₂ + Cl₂↑ + 2H₂O" reduced="Mn (+4 → +2)" oxidised="Cl (−1 → 0)" obs="Yellow-green gas (Cl₂) produced" note="Lab preparation of Cl₂. MnO₂ acts as oxidising agent. Must be concentrated HCl — dilute HCl won't work." />
+            <Reaction color={c} equation="2H₂O₂ → 2H₂O + O₂   [MnO₂ as catalyst]" note="MnO₂ also catalyses decomposition of H₂O₂. It doesn't change oxidation states itself permanently here — it's a catalyst." />
+          </Section>
+        </>
+      ),
+
+      chromium: (c) => (
+        <>
+          <InfoBox color="#fed7aa" bg="rgba(249,115,22,0.07)">
+            <b>Key idea:</b> The two key chromium ions are Cr₂O₇²⁻ (orange, +6) and CrO₄²⁻ (yellow, +6). They interconvert with pH — that's NOT redox. But Cr₂O₇²⁻ is also a powerful oxidising agent that gets reduced to Cr³⁺ (green, +3).
+          </InfoBox>
+          <Section title="pH-Dependent Equilibrium (NOT redox)" color={c}>
+            <Reaction color={c} equation="Cr₂O₇²⁻ + 2OH⁻ ⇌ 2CrO₄²⁻ + H₂O" obs="Orange → Yellow (add alkali)" note="Add acid: equilibrium shifts left → orange. Add alkali: equilibrium shifts right → yellow. Chromium stays at +6 throughout — this is just acid-base equilibrium, not redox." />
+          </Section>
+          <Section title="Cr₂O₇²⁻ as Oxidising Agent (in acid)" color={c}>
+            <Reaction color={c} equation="Cr₂O₇²⁻ + 14H⁺ + 6e⁻ → 2Cr³⁺ + 7H₂O" reduced="Cr (+6 → +3)" obs="Orange → Green" note="The half-equation. 6 electrons needed (3 per Cr atom, 2 Cr atoms). Needs acid — H⁺ appears on the left." />
+            <Reaction color={c} equation="Cr₂O₇²⁻ + 6Fe²⁺ + 14H⁺ → 2Cr³⁺ + 6Fe³⁺ + 7H₂O" reduced="Cr (+6 → +3)" oxidised="Fe (+2 → +3)" obs="Orange → Green" note="Dichromate oxidises Fe²⁺. 6 Fe²⁺ needed per Cr₂O₇²⁻ because 6 electrons needed. Titrations use this." />
+            <Reaction color={c} equation="Cr₂O₇²⁻ + 6I⁻ + 14H⁺ → 2Cr³⁺ + 3I₂ + 7H₂O" reduced="Cr (+6 → +3)" oxidised="I⁻ (−1 → 0)" obs="Orange → Green, brown I₂ forms" />
+            <Reaction color={c} equation="Cr₂O₇²⁻ + 3C₂H₅OH + 8H⁺ → 2Cr³⁺ + 3CH₃CHO + 7H₂O" reduced="Cr (+6 → +3)" oxidised="C (ethanol → ethanal)" obs="Orange → Green — breathalyser reaction!" note="Oxidises ethanol to ethanal (if limited dichromate) or ethanoic acid (excess). The original breathalyser used this colour change." />
+          </Section>
+          <Section title="Cr³⁺ in Excess Alkali → CrO₄²⁻" color={c}>
+            <Reaction color={c} equation="Cr³⁺ + 3OH⁻ → Cr(OH)₃↓" obs="Green solution → grey-green precipitate" note="First, adding NaOH precipitates Cr(OH)₃. Cr(OH)₃ is amphoteric — it dissolves in both acid and excess alkali." />
+            <Reaction color={c} equation="Cr(OH)₃ + OH⁻ → [Cr(OH)₄]⁻" obs="Precipitate dissolves in excess NaOH → dark green solution" note="Amphoteric behaviour. Cr(OH)₃ dissolves in excess alkali to form chromate(III) complex." />
+            <Reaction color={c} equation="2[Cr(OH)₄]⁻ + 3H₂O₂ → 2CrO₄²⁻ + 2H⁺ + 6H₂O" oxidised="Cr (+3 → +6)" reduced="O in H₂O₂ (−1 → −2)" obs="Dark green → yellow" note="H₂O₂ oxidises Cr³⁺ back to Cr⁶⁺ (as chromate). H₂O₂ acts as oxidising agent." />
+          </Section>
+        </>
+      ),
+
+      iron: (c) => (
+        <>
+          <InfoBox color="#fecaca" bg="rgba(248,113,113,0.07)">
+            <b>Key idea:</b> Iron switches between +2 (pale green) and +3 (yellow-brown). Fe²⁺ is easily oxidised to Fe³⁺. Fe³⁺ can be reduced back to Fe²⁺ (notably by I⁻). Knowing which way it goes and what's doing the oxidising/reducing is everything.
+          </InfoBox>
+          <Section title="Oxidising Fe²⁺ → Fe³⁺" color={c}>
+            <Reaction color={c} equation="2Fe²⁺ + Cl₂ → 2Fe³⁺ + 2Cl⁻" oxidised="Fe (+2 → +3)" reduced="Cl₂ (0 → −1)" obs="Pale green → yellow-brown" note="Cl₂ is the oxidising agent. This is why Cl₂ is used to convert Fe²⁺ to Fe³⁺ in qualitative analysis." />
+            <Reaction color={c} equation="2Fe²⁺ + H₂O₂ + 2H⁺ → 2Fe³⁺ + 2H₂O" oxidised="Fe (+2 → +3)" reduced="O in H₂O₂ (−1 → −2)" obs="Pale green → yellow-brown" note="H₂O₂ as oxidising agent." />
+            <Reaction color={c} equation="See MnO₄⁻ section: 2MnO₄⁻ + 5Fe²⁺ + 16H⁺ → 2Mn²⁺ + 5Fe³⁺ + 8H₂O" note="MnO₄⁻ oxidises Fe²⁺ — one of the most common titrations." />
+          </Section>
+          <Section title="Reducing Fe³⁺ → Fe²⁺" color={c}>
+            <Reaction color={c} equation="2Fe³⁺ + 2I⁻ → 2Fe²⁺ + I₂" oxidised="I⁻ (−1 → 0)" reduced="Fe (+3 → +2)" obs="Yellow-brown → pale green + brown I₂" note="Fe³⁺ is a strong enough oxidising agent to oxidise I⁻. This reaction is used in iodometric titrations — the I₂ produced is then titrated with thiosulfate." />
+            <Reaction color={c} equation="2Fe³⁺ + Zn → 2Fe²⁺ + Zn²⁺" oxidised="Zn (0 → +2)" reduced="Fe (+3 → +2)" note="Zinc (strong reducing agent) reduces Fe³⁺." />
+            <Reaction color={c} equation="2Fe³⁺ + SO₂ + 2H₂O → 2Fe²⁺ + SO₄²⁻ + 4H⁺" oxidised="S (+4 → +6)" reduced="Fe (+3 → +2)" note="SO₂ reduces Fe³⁺ to Fe²⁺." />
+          </Section>
+          <Section title="Tests for Iron Ions" color={c}>
+            <div style={{ background: "rgba(255,255,255,0.03)", borderRadius: 8, padding: "12px 16px", fontSize: "0.85em", color: "#cbd5e1" }}>
+              <div style={{ marginBottom: 6 }}><b style={{ color: c }}>Fe²⁺ test:</b> Add NaOH → dirty green precipitate Fe(OH)₂. Turns rusty-brown on standing in air as Fe²⁺ oxidises to Fe³⁺.</div>
+              <div style={{ marginBottom: 6 }}><b style={{ color: c }}>Fe³⁺ test:</b> Add NaOH → rust/orange-brown precipitate Fe(OH)₃. OR add KSCN → intense blood red solution.</div>
+              <div><b style={{ color: c }}>Distinguish Fe²⁺ from Fe³⁺:</b> Add KSCN — only Fe³⁺ goes blood red.</div>
+            </div>
+          </Section>
+        </>
+      ),
+
+      copper: (c) => (
+        <>
+          <InfoBox color="#fed7aa" bg="rgba(251,146,60,0.07)">
+            <b>Key idea:</b> Copper exists as Cu²⁺ (+2, blue), Cu⁺ (+1), or Cu (0). In water, Cu⁺ is unstable and disproportionates. The Cu²⁺ + I⁻ reaction is especially important for titrations.
+          </InfoBox>
+          <Section title="Cu⁺ Disproportionation" color={c}>
+            <Reaction color={c} equation="2Cu⁺ → Cu²⁺ + Cu" oxidised="Cu⁺ fraction (+1 → +2)" reduced="Cu⁺ fraction (+1 → 0)" obs="Cu⁺ is unstable in aqueous solution — spontaneously disproportionates to blue Cu²⁺ solution + copper metal" note="This is why Cu⁺ isn't stable in water. Cu⁺ acts as both oxidising and reducing agent simultaneously." />
+          </Section>
+          <Section title="Cu²⁺ + Iodide (KEY for titrations)" color={c}>
+            <Reaction color={c} equation="2Cu²⁺ + 4I⁻ → 2CuI↓ + I₂" oxidised="I⁻ (−1 → 0, in I₂)" reduced="Cu (+2 → +1, in CuI)" obs="Blue solution → white CuI precipitate + brown I₂" note="Cu²⁺ oxidises I⁻ to I₂. The amount of I₂ produced = amount of Cu²⁺. You then titrate the I₂ with sodium thiosulfate to find how much Cu²⁺ was originally present." />
+          </Section>
+          <Section title="Copper + Acids" color={c}>
+            <Reaction color={c} equation="Cu + 2H₂SO₄(conc, hot) → CuSO₄ + SO₂ + 2H₂O" oxidised="Cu (0 → +2)" reduced="S (+6 → +4)" obs="Blue CuSO₄ solution formed, SO₂ gas" note="Cu doesn't react with dilute H₂SO₄ — it's not reactive enough. Only conc H₂SO₄ as oxidising agent works." />
+            <Reaction color={c} equation="Cu + 4HNO₃(conc) → Cu(NO₃)₂ + 2NO₂ + 2H₂O" oxidised="Cu (0 → +2)" reduced="N (+5 → +4, in NO₂)" obs="Brown gas (NO₂) produced, blue solution" note="Conc nitric acid produces NO₂." />
+            <Reaction color={c} equation="3Cu + 8HNO₃(dilute) → 3Cu(NO₃)₂ + 2NO + 4H₂O" oxidised="Cu (0 → +2)" reduced="N (+5 → +2, in NO)" obs="Colourless NO gas (turns brown in air as 2NO + O₂ → 2NO₂)" note="Dilute nitric acid produces NO instead of NO₂." />
+          </Section>
+          <Section title="Copper with Oxygen/Halogens" color={c}>
+            <Reaction color={c} equation="2Cu + O₂ → 2CuO   (on heating)" oxidised="Cu (0 → +2)" reduced="O₂ (0 → −2)" obs="Pink/orange copper → black CuO" />
+            <Reaction color={c} equation="Cu + Cl₂ → CuCl₂" oxidised="Cu (0 → +2)" reduced="Cl₂ (0 → −1)" obs="Brown/green solid" />
+          </Section>
+        </>
+      ),
+
+      iodine: (c) => (
+        <>
+          <InfoBox color="#e2e8f0" bg="rgba(148,163,184,0.07)">
+            <b>Key idea:</b> The iodine/thiosulfate reaction is the backbone of iodometric titrations. You produce I₂ via a redox reaction, then use Na₂S₂O₃ to titrate the I₂. This lets you work backwards to find the original oxidising agent.
+          </InfoBox>
+          <Section title="The Core Reaction: I₂ + Thiosulfate" color={c}>
+            <Reaction color={c} equation="I₂ + 2S₂O₃²⁻ → 2I⁻ + S₄O₆²⁻" reduced="I₂ (0 → −1)" oxidised="S (+2 → +2.5 average in S₄O₆²⁻)" obs="Brown I₂ solution → colourless when I₂ used up. Starch indicator: blue-black → colourless at endpoint." note="The ratio is 1 I₂ : 2 S₂O₃²⁻. Learn this — it comes up in every iodometric calculation." />
+          </Section>
+          <Section title="Producing I₂ — Indirect Titration Examples" color={c}>
+            <Reaction color={c} equation="2Fe³⁺ + 2I⁻ → 2Fe²⁺ + I₂" oxidised="I⁻ (−1 → 0)" reduced="Fe (+3 → +2)" note="Excess KI added to Fe³⁺ sample → I₂ produced. Titrate I₂ with Na₂S₂O₃ → find moles of I₂ → find moles of Fe³⁺." />
+            <Reaction color={c} equation="2Cu²⁺ + 4I⁻ → 2CuI + I₂" oxidised="I⁻ (−1 → 0)" reduced="Cu (+2 → +1)" note="Excess KI added to Cu²⁺ sample → I₂ produced. Same back-titration logic." />
+            <Reaction color={c} equation="Cr₂O₇²⁻ + 6I⁻ + 14H⁺ → 2Cr³⁺ + 3I₂ + 7H₂O" oxidised="I⁻ (−1 → 0)" reduced="Cr (+6 → +3)" note="Dichromate + excess KI → I₂ → titrate with thiosulfate." />
+            <Reaction color={c} equation="IO₃⁻ + 5I⁻ + 6H⁺ → 3I₂ + 3H₂O" oxidised="I⁻ (−1 → 0)" reduced="I in IO₃⁻ (+5 → 0)" note="Iodate + iodide → I₂. Also disproportionation in reverse." />
+          </Section>
+          <Section title="Starch Indicator" color={c}>
+            <div style={{ background: "rgba(255,255,255,0.03)", borderRadius: 8, padding: "12px 16px", fontSize: "0.85em", color: "#cbd5e1" }}>
+              Starch forms a deep blue-black complex with I₂ (not a chemical reaction — it's an inclusion complex). When all I₂ has been reduced to I⁻ by Na₂S₂O₃, the blue-black colour disappears to colourless — this is the endpoint. Add starch near the end (when solution is pale yellow) so the endpoint is sharp.
+            </div>
+          </Section>
+        </>
+      ),
+
+      h2o2: (c) => (
+        <>
+          <InfoBox color="#cffafe" bg="rgba(103,232,249,0.07)">
+            <b>Key idea:</b> H₂O₂ is special — oxygen is at oxidation state −1. From −1, it can go DOWN to −2 (oxidising agent) or UP to 0 (reducing agent). It can even react with itself — disproportionation.
+          </InfoBox>
+          <Section title="H₂O₂ as Oxidising Agent (O goes −1 → −2)" color={c}>
+            <Reaction color={c} equation="H₂O₂ + 2Fe²⁺ + 2H⁺ → 2Fe³⁺ + 2H₂O" reduced="O (−1 → −2, in H₂O)" oxidised="Fe (+2 → +3)" note="H₂O₂ oxidises Fe²⁺. The O in H₂O₂ gains electrons, going to −2 in water." />
+            <Reaction color={c} equation="H₂O₂ + 2I⁻ + 2H⁺ → I₂ + 2H₂O" reduced="O (−1 → −2)" oxidised="I⁻ (−1 → 0)" obs="Brown I₂ forms" note="H₂O₂ oxidises I⁻ to I₂." />
+            <Reaction color={c} equation="H₂O₂ + 2e⁻ + 2H⁺ → 2H₂O   [half-equation]" reduced="O (−1 → −2)" note="Standard reduction half-equation for H₂O₂." />
+          </Section>
+          <Section title="H₂O₂ as Reducing Agent (O goes −1 → 0)" color={c}>
+            <Reaction color={c} equation="2MnO₄⁻ + 5H₂O₂ + 6H⁺ → 2Mn²⁺ + 5O₂ + 8H₂O" oxidised="O (−1 → 0, in O₂)" reduced="Mn (+7 → +2)" obs="Purple → colourless, effervescence of O₂" note="Against a stronger oxidising agent like MnO₄⁻, H₂O₂ gives up electrons — it acts as reducing agent. O ends up at 0 in O₂ gas." />
+            <Reaction color={c} equation="Cr₂O₇²⁻ + 3H₂O₂ + 8H⁺ → 2Cr³⁺ + 3O₂ + 7H₂O" oxidised="O (−1 → 0)" reduced="Cr (+6 → +3)" note="Same — against dichromate, H₂O₂ is the reducing agent." />
+          </Section>
+          <Section title="H₂O₂ Disproportionation" color={c}>
+            <Reaction color={c} equation="2H₂O₂ → 2H₂O + O₂   [MnO₂ or KI catalyst]" oxidised="O fraction (−1 → 0, in O₂)" reduced="O fraction (−1 → −2, in H₂O)" obs="Rapid effervescence of O₂. Relight glowing splint." note="H₂O₂ reacts with itself. One O is oxidised to O₂, the other is reduced to water. Classic disproportionation. MnO₂ catalyses this — used in labs to make O₂." />
+          </Section>
+        </>
+      ),
+    };
+
+    function App() {
+      const [active, setActive] = useState("halogens");
+      const topic = topics.find(t => t.id === active);
+
+      return (
+        <div style={{ minHeight: "100vh", background: "#0b0f18", color: "#e2e8f0", fontFamily: "'Georgia', 'Times New Roman', serif" }}>
+          <div style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)", borderBottom: "1px solid rgba(255,255,255,0.08)", padding: "24px 28px 20px" }}>
+            <div style={{ fontSize: "0.75em", color: "#64748b", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 6 }}>AQA A-Level Chemistry</div>
+            <h1 style={{ margin: 0, fontSize: "1.7em", fontWeight: 700, color: "#f8fafc", letterSpacing: "-0.01em" }}>Inorganic Redox — Complete Guide</h1>
+            <div style={{ color: "#94a3b8", fontSize: "0.85em", marginTop: 6 }}>Every reaction you need to know, with oxidation state changes explained</div>
+          </div>
+
+          <div style={{ display: "flex", overflowX: "auto", borderBottom: "1px solid rgba(255,255,255,0.08)", background: "#0d1117", padding: "0 12px", scrollbarWidth: "none", gap: 2 }}>
+            {topics.map(t => (
+              <button key={t.id} onClick={() => setActive(t.id)} style={{ background: active === t.id ? t.dark : "transparent", border: "none", borderBottom: active === t.id ? `2px solid ${t.color}` : "2px solid transparent", color: active === t.id ? t.color : "#64748b", padding: "12px 14px", cursor: "pointer", fontFamily: "inherit", fontSize: "0.82em", fontWeight: active === t.id ? 700 : 500, whiteSpace: "nowrap", transition: "all 0.15s", letterSpacing: "0.01em" }}>
+                {t.emoji} {t.label}
+              </button>
+            ))}
+          </div>
+
+          <div style={{ maxWidth: 860, margin: "0 auto", padding: "28px 20px 60px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
+              <div style={{ width: 4, height: 32, background: topic.color, borderRadius: 2 }} />
+              <h2 style={{ margin: 0, fontSize: "1.4em", fontWeight: 700, color: "#f8fafc" }}>{topic.label}</h2>
+            </div>
+            {content[active]?.(topic.color)}
+          </div>
+
+          <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", padding: "16px 28px", background: "#0d1117", display: "flex", gap: 20, flexWrap: "wrap", fontSize: "0.8em" }}>
+            <span><span style={{ background: "rgba(239,68,68,0.18)", color: "#fca5a5", padding: "3px 10px", borderRadius: 20, fontWeight: 700, marginRight: 6 }}>↑ OXIDISED</span>loses electrons, oxidation state increases</span>
+            <span><span style={{ background: "rgba(59,130,246,0.18)", color: "#93c5fd", padding: "3px 10px", borderRadius: 20, fontWeight: 700, marginRight: 6 }}>↓ REDUCED</span>gains electrons, oxidation state decreases</span>
+            <span style={{ color: "#64748b" }}>OIL RIG — Oxidation Is Loss, Reduction Is Gain (of electrons)</span>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
